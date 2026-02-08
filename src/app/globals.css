@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  /* Slightly cooler, cleaner light palette (keeps overall layout unchanged). */
+  --background: #f4f6fb;
+  --foreground: #111827;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Deep navy background improves contrast while staying close to the existing dark mode. */
+    --background: #0b1220;
+    --foreground: #e5e7eb;
+  }
+}
+
+body {
+  /* Soft gradient “color grading” without changing component structure. */
+  background:
+    radial-gradient(1200px circle at 15% 0%, rgba(99, 102, 241, 0.14), transparent 55%),
+    radial-gradient(900px circle at 92% 18%, rgba(16, 185, 129, 0.10), transparent 45%),
+    var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- UI animations (used sparingly across the app) --- */
+@keyframes chatFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chatScaleIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-anim-fade-in {
+  animation: chatFadeIn 320ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.chat-anim-modal {
+  animation: chatScaleIn 260ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .chat-anim-fade-in,
+  .chat-anim-modal {
+    animation: none !important;
+  }
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
